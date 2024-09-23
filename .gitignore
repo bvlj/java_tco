@@ -1,0 +1,34 @@
+# Eclipse
+.project
+.settings
+.classpath
+
+# Gradle
+/.gradle/
+**/build/
+/build
+/captures/
+/local.properties
+
+# IDEA
+/.idea
+*/out
+!/out
+
+# Logs
+*.log
+
+# MacOS
+.DS_Store
+
+# Vi
+*~
+
+# VM crash logs
+hs_err_pid*
+
+# VSCode
+/bin
+
+# Windows
+Thumbs.db

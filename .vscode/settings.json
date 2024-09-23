@@ -1,0 +1,19 @@
+{
+  "editor.bracketPairColorization.enabled": true,
+  "editor.tabSize": 2,
+  "editorconfig.generateAuto": false,
+  "files.exclude": {
+    "**/.git": true,
+    "**/.DS_Store": true,
+    "**/Thumbs.db": true,
+    ".editorconfig": true,
+    ".gradle": true,
+    ".github": true,
+    "gradle": true
+  },
+  "files.trimFinalNewlines": true,
+  "files.insertFinalNewline": true,
+  "java.configuration.updateBuildConfiguration": "automatic",
+  "java.inlayHints.parameterNames.enabled": "none",
+  "testing.showCoverageInExplorer": true
+}

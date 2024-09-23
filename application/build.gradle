@@ -1,0 +1,43 @@
+plugins {
+  id "application"
+  id "idea"
+}
+
+java {
+  toolchain.languageVersion.set(JavaLanguageVersion.of(21))
+}
+
+application {
+  mainClass = "lab.app.Application"
+
+  applicationDefaultJvmArgs = [
+      "-javaagent:../agent/build/libs/agent.jar",
+      "--patch-module",
+      "java.base=../profiler/build/libs/profiler.jar",
+      "--add-exports",
+      "java.base/lab.profiler=ALL-UNNAMED",
+  ]
+}
+
+repositories {
+  mavenCentral()
+}
+
+dependencies {
+  implementation "org.ow2.asm:asm:9.7"
+  implementation "org.ow2.asm:asm-tree:9.7"
+  implementation "org.ow2.asm:asm-util:9.7"
+  testImplementation "junit:junit:4.13.2"
+}
+
+tasks.named("run") {
+  dependsOn(":agent:assemble")
+  dependsOn(":profiler:assemble")
+}
+
+idea {
+  module {
+    downloadJavadoc = true
+    downloadSources = true
+  }
+}
