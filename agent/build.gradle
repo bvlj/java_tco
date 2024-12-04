@@ -1,5 +1,5 @@
 plugins {
-  id "application"
+  id "java"
   id "idea"
 }
 
@@ -7,18 +7,14 @@ java {
   toolchain.languageVersion.set(JavaLanguageVersion.of(21))
 }
 
-application {
-  mainClass = "lab.App"
-}
-
 repositories {
   mavenCentral()
 }
 
 dependencies {
-  implementation "org.ow2.asm:asm:9.7"
-  implementation "org.ow2.asm:asm-tree:9.7"
-  implementation "org.ow2.asm:asm-util:9.7"
+  implementation libs.asm
+  implementation libs.asmUtil
+  implementation libs.asmTree
 }
 
 jar {

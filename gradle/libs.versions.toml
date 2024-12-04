@@ -1,0 +1,9 @@
+[versions]
+asm = "9.7.1"
+
+[libraries]
+asm = { group = "org.ow2.asm", name = "asm", version.ref = "asm" }
+asmTree = { group = "org.ow2.asm", name = "asm-tree", version.ref = "asm" }
+asmUtil = { group = "org.ow2.asm", name = "asm-util", version.ref = "asm" }
+
+[plugins]

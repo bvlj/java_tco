@@ -2,7 +2,6 @@ package lab.app;
 
 public class Application {
 
-
   public static void main(String[] args) {
     sayHi();
     printArguments(args);

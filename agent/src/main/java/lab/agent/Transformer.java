@@ -20,6 +20,7 @@ public final class Transformer implements ClassFileTransformer {
       Class<?> classBeingRedefined,
       ProtectionDomain protectionDomain,
       byte[] classFileBuffer) {
+    // Skip STDLIB, JVM, agent and profiler classes
     return loader == null
         || className.startsWith("java/")
         || className.startsWith("sun/")
@@ -29,19 +30,25 @@ public final class Transformer implements ClassFileTransformer {
         : instrument(classFileBuffer);
   }
 
+  /**
+   * Instrument the given class to profile it and compute the CCT.
+   */
   private byte[] instrument(byte[] bytes) {
     final ClassReader cr = new ClassReader(bytes);
     final ClassNode cn = new ClassNode();
     cr.accept(cn, ClassReader.SKIP_FRAMES);
 
-    instrument(cn);
+    addPatchesToMethods(cn);
 
     final ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_FRAMES);
     cn.accept(cw);
     return cw.toByteArray();
   }
 
-  private void instrument(ClassNode cn) {
+  /**
+   * Add patches at the entry and exit points of all methods to compute the CCT.
+   */
+  private void addPatchesToMethods(ClassNode cn) {
     for (final MethodNode mn : cn.methods) {
       // Add "enter" patch
       mn.instructions.insert(getEnterPatch(cn, mn));
@@ -63,7 +70,14 @@ public final class Transformer implements ClassFileTransformer {
     }
   }
 
-  private InsnList getEnterPatch(ClassNode cn, MethodNode mn) {
+  /**
+   * Enter patch.
+   *
+   * <p>Generates a patch that contains the following code:
+   * {@code lab.profiler.Profiler.getInstance().enterNewNode($CLASS_NAME, $METHOD_NAME,
+   * $METHOD_DESC)}
+   */
+  private static InsnList getEnterPatch(ClassNode cn, MethodNode mn) {
     final InsnList patch = new InsnList();
     patch.add(new MethodInsnNode(Opcodes.INVOKESTATIC,
         "lab/profiler/Profiler",
@@ -80,7 +94,13 @@ public final class Transformer implements ClassFileTransformer {
   }
 
 
-  private InsnList getExitPatch() {
+  /**
+   * Exit patch.
+   *
+   * <p>Generates a patch that contains the following code:
+   * {@code lab.profiler.Profiler.getInstance().exitCurrentNode()}.
+   */
+  private static InsnList getExitPatch() {
     final InsnList patch = new InsnList();
     patch.add(new MethodInsnNode(Opcodes.INVOKESTATIC,
         "lab/profiler/Profiler",
