@@ -35,7 +35,9 @@ public final class Profiler {
   /**
    * Mark the entrance into a new child node of the CCT.
    */
-  public synchronized void enterNewNode(String className, String methodName, String methodDescriptor) {
+  public synchronized void enterNewNode(String className,
+      String methodName,
+      String methodDescriptor) {
     visiting = visiting.addChild(className, methodName, methodDescriptor);
   }
 

@@ -1,6 +1,6 @@
 package lab.app;
 
-public class Application {
+public final class Application {
 
   public static void main(String[] args) {
     sayHi();
@@ -34,6 +34,6 @@ public class Application {
   }
 
   private static void exceptionalSayHi() throws Exception {
-    throw new Exception("Hello world!");
+    throw new Exception("Exceptional hello!");
   }
 }
