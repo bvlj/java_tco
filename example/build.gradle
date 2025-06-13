@@ -1,0 +1,19 @@
+plugins {
+  id("application")
+}
+
+java {
+  toolchain.languageVersion.set(JavaLanguageVersion.of(21))
+}
+
+application {
+  mainClass = "lab.example.Application"
+
+  applicationDefaultJvmArgs = [
+      "-javaagent:${rootDir}/agent/build/libs/agent.jar",
+  ]
+}
+
+tasks.named("run") {
+  dependsOn(":agent:assemble")
+}

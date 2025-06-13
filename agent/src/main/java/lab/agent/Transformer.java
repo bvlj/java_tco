@@ -42,7 +42,6 @@ public final class Transformer implements ClassFileTransformer {
   private void patchMethods(ClassNode cn) {
     for (final MethodNode mn : cn.methods) {
       if (TailCallOptimization.isTailRecursive(cn, mn)) {
-        System.out.println("Optimizing " + cn.name + "." + mn.name);
         TailCallOptimization.optimize(cn, mn);
       }
     }

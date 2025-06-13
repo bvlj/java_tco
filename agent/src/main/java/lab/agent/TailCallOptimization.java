@@ -50,7 +50,6 @@ public final class TailCallOptimization {
         return lastWasTailRecursiveCall;
     }
 
-
     public static void optimize(ClassNode cn, MethodNode mn) {
         final Type[] argTypes = Type.getArgumentTypes(mn.desc);
         final int returnOpcode = Type.getReturnType(mn.desc).getOpcode(IRETURN);

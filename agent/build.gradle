@@ -1,6 +1,5 @@
 plugins {
   id("java")
-  id("idea")
 }
 
 java {
@@ -11,7 +10,6 @@ repositories {
   mavenCentral()
 }
 
-// Dependencies: see gradle/libs.versions.toml
 dependencies {
   implementation(libs.asm)
   implementation(libs.asmUtil)
@@ -19,13 +17,8 @@ dependencies {
 }
 
 jar {
-  // Manifest of the agent
   manifest {
-    attributes(
-        "Premain-Class": "lab.agent.Agent",
-        "Can-Redefine-Classes": "true",
-        "Can-Retransform-Classes": "true",
-    )
+    attributes("Premain-Class": "lab.agent.Agent")
   }
 
   from {
@@ -36,13 +29,5 @@ jar {
         exclude("**/module-info.class")
       }
     }
-  }
-}
-
-// Download sources and javadoc jars of dependencies
-idea {
-  module {
-    downloadJavadoc = true
-    downloadSources = true
   }
 }

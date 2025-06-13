@@ -1,2 +1,2 @@
 include(":agent")
-include(":application")
+include(":example")
