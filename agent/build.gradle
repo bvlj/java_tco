@@ -21,7 +21,11 @@ dependencies {
 jar {
   // Manifest of the agent
   manifest {
-    attributes("Premain-Class": "lab.agent.Agent")
+    attributes(
+        "Premain-Class": "lab.agent.Agent",
+        "Can-Redefine-Classes": "true",
+        "Can-Retransform-Classes": "true",
+    )
   }
 
   from {

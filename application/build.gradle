@@ -13,22 +13,13 @@ application {
   // JVM arguments (those that are not passed to the main method)
   applicationDefaultJvmArgs = [
       "-javaagent:${rootDir}/agent/build/libs/agent.jar",
-      // Add classes of profiler.jar to the java.base module
-      "--patch-module",
-      "java.base=${rootDir}/profiler/build/libs/profiler.jar",
-      // Export lab.profiler into java.base:
-      //     module java.base { /* ... */ exports lab.profiler: }
-      // The scope is ALL-UNNAMED because lab.agent does not have a module
-      "--add-exports",
-      "java.base/lab.profiler=ALL-UNNAMED",
   ]
 }
 
-// Make ":application:run" depend on ":agent: assemble" and
-// ":profiler:assemble" to ensure that the code is always up-to-date
+// Make ":application:run" depend on ":agent: assemble" to ensure that the code
+// is always up-to-date
 // The "assemble" task in Gradle is the one that produces the jar file
 // (not to be confused with "compile" which is "assemble" + "test")
 tasks.named("run") {
   dependsOn(":agent:assemble")
-  dependsOn(":profiler:assemble")
 }
